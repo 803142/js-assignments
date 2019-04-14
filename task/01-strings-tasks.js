@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+    return (value1+value2);
 }
 
 
@@ -38,7 +38,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    return value.split('').length;
 }
 
 /**
@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -69,7 +69,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    return value.slice(7, value.split('').length-1);
 }
 
 
@@ -84,7 +84,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value.split('')[0];
 }
 
 /**
@@ -99,7 +99,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.replace(/^\s*/ , '').replace(/\s*$/ , '');
 }
 
 /**
@@ -114,7 +114,8 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    const arr = new Array(Number(count));
+    return arr.fill(value).join('');
 }
 
 /**
@@ -130,7 +131,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    return str.slice(0,str.indexOf(value))+str.slice(str.indexOf(value)+value.length);
 }
 
 /**
@@ -160,7 +161,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -174,7 +175,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    return str.split(';');
 }
 
 /**
@@ -201,7 +202,22 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    const arrCol = [];
+    const arrRow = new Array(width-2);
+
+    function draw(begin, middle, end) {
+       return [begin].concat(arrRow.fill(middle)).concat([end]).join('');
+    }
+
+    arrCol.push(draw('┌', '─', '┐\n'));
+
+    for (let i=0; i<height-2; i++) {
+        arrCol.push(draw('│', ' ', '│\n'));
+    };
+
+    arrCol.push(draw('└', '─', '┘\n'));
+
+    return arrCol.join('');
 }
 
 
@@ -221,6 +237,7 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
+  
     throw new Error('Not implemented');
 }
 
@@ -238,7 +255,9 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    let a = value;    
+    if (!a) {return false};
+    if (a instanceof String) {return true}  else {return (a + '' === a)};
 }
 
 
@@ -267,8 +286,56 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
-}
+    const card = value.split('');
+    let cardCost = 0;
+    let cardSign = 0;
+    let aFaktor = 1;
+    if (card.length == 2) {
+        switch (card[0]) {
+            case 'A':  
+                cardCost = 0;
+                break;
+
+            case 'J':  
+                cardCost = 10;
+                break;
+
+            case 'Q':  
+                cardCost = 11;
+                break;
+
+            case 'K':  
+                cardCost = 12;
+                break;
+
+            default:
+                cardCost = Number(card[0]) -1;
+                break;
+        } 
+
+    }else {
+        cardCost = 9;
+        aFaktor = 2;
+    }
+        switch (card[aFaktor]) {
+            case '♣':
+                cardSign = 0;
+                break;    
+            case '♦':  
+                cardSign = 13;
+                break;
+            case '♥':  
+                cardSign = 26;
+                break;
+
+            case '♠':  
+                cardSign = 39;
+                break;
+        
+        } 
+    
+        return (cardCost + cardSign);
+    }
 
 
 module.exports = {
